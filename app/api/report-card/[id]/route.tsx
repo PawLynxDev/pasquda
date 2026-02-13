@@ -19,6 +19,8 @@ export async function GET(
   const interBold = (await readFile(join(fontsDir, "Inter-Bold.ttf"))).buffer;
   const jetbrainsBold = (await readFile(join(fontsDir, "JetBrainsMono-Bold.ttf"))).buffer;
 
+  const typeLabel = roast.roast_type === "linkedin" ? "linkedin" : roast.roast_type === "resume" ? "resume" : roast.domain;
+
   return new ImageResponse(<FullReportCard roast={roast} />, {
     width: 1200,
     height: 630,
@@ -28,7 +30,7 @@ export async function GET(
     ],
     headers: {
       "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800",
-      "Content-Disposition": `inline; filename="pasquda-report-card.png"`,
+      "Content-Disposition": `inline; filename="pasquda-${typeLabel}-report-card.png"`,
     },
   });
 }

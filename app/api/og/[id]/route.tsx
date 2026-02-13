@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { getRoast } from "@/lib/supabase";
-import { OGReportCard } from "@/lib/generate-image";
+import { OGReportCard, LinkedInOGCard, ResumeOGCard } from "@/lib/generate-image";
 
 export async function GET(
   _request: NextRequest,
@@ -19,7 +19,19 @@ export async function GET(
   const interBold = (await readFile(join(fontsDir, "Inter-Bold.ttf"))).buffer;
   const jetbrainsBold = (await readFile(join(fontsDir, "JetBrainsMono-Bold.ttf"))).buffer;
 
-  return new ImageResponse(<OGReportCard roast={roast} />, {
+  let card;
+  switch (roast.roast_type) {
+    case "linkedin":
+      card = <LinkedInOGCard roast={roast} />;
+      break;
+    case "resume":
+      card = <ResumeOGCard roast={roast} />;
+      break;
+    default:
+      card = <OGReportCard roast={roast} />;
+  }
+
+  return new ImageResponse(card, {
     width: 1200,
     height: 630,
     fonts: [

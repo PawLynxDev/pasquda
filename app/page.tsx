@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { Flame } from "lucide-react";
+import Link from "next/link";
+import { Flame, Swords, UserRound, FileText } from "lucide-react";
 import { Header } from "@/components/Header";
 import { UrlInput } from "@/components/UrlInput";
 import { HowItWorks } from "@/components/HowItWorks";
@@ -61,6 +62,29 @@ export default async function HomePage() {
             <Flame className="h-4 w-4 text-pasquda-pink" /> {totalRoasts.toLocaleString()} websites roasted so far
           </p>
         )}
+
+        {/* Also try section */}
+        <div className="relative mt-8 flex flex-wrap items-center justify-center gap-2 animate-fade-in sm:mt-10">
+          <span className="text-xs text-pasquda-gray/40">Also try:</span>
+          <Link
+            href="/battle"
+            className="flex items-center gap-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] px-4 py-2 text-xs font-bold text-pasquda-gray/60 transition-all hover:border-pasquda-pink/30 hover:text-white/80"
+          >
+            <Swords className="h-3.5 w-3.5" /> Roast Battle
+          </Link>
+          <Link
+            href="/linkedin"
+            className="flex items-center gap-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] px-4 py-2 text-xs font-bold text-pasquda-gray/60 transition-all hover:border-pasquda-pink/30 hover:text-white/80"
+          >
+            <UserRound className="h-3.5 w-3.5" /> LinkedIn Roast
+          </Link>
+          <Link
+            href="/resume"
+            className="flex items-center gap-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] px-4 py-2 text-xs font-bold text-pasquda-gray/60 transition-all hover:border-pasquda-pink/30 hover:text-white/80"
+          >
+            <FileText className="h-3.5 w-3.5" /> Resume Roast
+          </Link>
+        </div>
       </section>
 
       {/* Divider */}

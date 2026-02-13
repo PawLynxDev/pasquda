@@ -1,5 +1,5 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
-import type { RoastResult } from "./utils";
+import type { RoastResult, BattleResult, RoastType } from "./utils";
 
 // Lazy-initialized Supabase client (avoids build errors when env vars are not set)
 let _supabaseAdmin: SupabaseClient | null = null;
@@ -24,6 +24,9 @@ export async function createPendingRoast(data: {
   url: string;
   domain: string;
   challenge_from?: string | null;
+  roast_type?: RoastType;
+  content_text?: string | null;
+  content_file_url?: string | null;
 }): Promise<string> {
   const { data: row, error } = await db()
     .from("roasts")
@@ -37,6 +40,9 @@ export async function createPendingRoast(data: {
       summary: "",
       backhanded_compliment: "",
       challenge_from: data.challenge_from || null,
+      roast_type: data.roast_type || "website",
+      content_text: data.content_text || null,
+      content_file_url: data.content_file_url || null,
     })
     .select("id")
     .single();
@@ -48,7 +54,7 @@ export async function createPendingRoast(data: {
 export async function completeRoast(
   id: string,
   data: {
-    screenshot_url: string;
+    screenshot_url: string | null;
     score: number;
     grade: string;
     roast_bullets: string[];
@@ -163,4 +169,162 @@ export async function findRecentScreenshot(
     .single();
 
   return data?.screenshot_url || null;
+}
+
+// ---- Battle functions ----
+
+export async function createBattle(
+  roastAId: string,
+  roastBId: string
+): Promise<string> {
+  const { data, error } = await db()
+    .from("battles")
+    .insert({
+      roast_a: roastAId,
+      roast_b: roastBId,
+      status: "processing",
+    })
+    .select("id")
+    .single();
+
+  if (error) throw error;
+  return data.id;
+}
+
+export async function completeBattle(
+  id: string,
+  data: { winner_id: string | null; verdict: string }
+): Promise<void> {
+  const { error } = await db()
+    .from("battles")
+    .update({
+      ...data,
+      status: "completed",
+    })
+    .eq("id", id);
+
+  if (error) throw error;
+}
+
+export async function failBattle(
+  id: string,
+  errorMessage?: string
+): Promise<void> {
+  const { error } = await db()
+    .from("battles")
+    .update({
+      status: "failed",
+      verdict: errorMessage || "Battle processing failed.",
+    })
+    .eq("id", id);
+
+  if (error) throw error;
+}
+
+export async function getBattle(id: string): Promise<BattleResult | null> {
+  const { data, error } = await db()
+    .from("battles")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) return null;
+  return data as BattleResult;
+}
+
+export async function incrementBattleShareCount(id: string): Promise<void> {
+  await db().rpc("increment_battle_share_count", { battle_id: id });
+}
+
+// ---- Email / History functions ----
+
+export async function upsertEmail(
+  email: string
+): Promise<{ id: string; token: string }> {
+  const token = crypto.randomUUID().replace(/-/g, "").slice(0, 32);
+
+  // Try insert first
+  const { data: existing } = await db()
+    .from("emails")
+    .select("id, token")
+    .eq("email", email)
+    .single();
+
+  if (existing) {
+    return { id: existing.id, token: existing.token };
+  }
+
+  const { data, error } = await db()
+    .from("emails")
+    .insert({ email, token })
+    .select("id, token")
+    .single();
+
+  if (error) throw error;
+  return { id: data.id, token: data.token };
+}
+
+export async function verifyEmailToken(
+  email: string,
+  token: string
+): Promise<boolean> {
+  const { data } = await db()
+    .from("emails")
+    .select("id")
+    .eq("email", email)
+    .eq("token", token)
+    .single();
+
+  return !!data;
+}
+
+export async function updateRoastEmail(
+  roastId: string,
+  email: string
+): Promise<void> {
+  const { error } = await db()
+    .from("roasts")
+    .update({ email })
+    .eq("id", roastId);
+
+  if (error) throw error;
+}
+
+export async function getRoastsByEmail(
+  email: string,
+  limit = 20,
+  offset = 0
+): Promise<RoastResult[]> {
+  const { data } = await db()
+    .from("roasts")
+    .select("*")
+    .eq("email", email)
+    .eq("status", "completed")
+    .order("created_at", { ascending: false })
+    .range(offset, offset + limit - 1);
+
+  return (data ?? []) as RoastResult[];
+}
+
+// ---- File upload functions ----
+
+export async function uploadFile(
+  buffer: Buffer,
+  filename: string,
+  contentType: string
+): Promise<string> {
+  const { error } = await db().storage
+    .from("uploads")
+    .upload(filename, buffer, {
+      contentType,
+      upsert: true,
+    });
+
+  if (error) throw error;
+
+  const { data: urlData } = db().storage
+    .from("uploads")
+    .getPublicUrl(filename);
+
+  return urlData.publicUrl;
 }

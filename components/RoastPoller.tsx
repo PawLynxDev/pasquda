@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { LoadingScreen } from "./LoadingScreen";
 import { ReportCard } from "./ReportCard";
 import { ShareButtons } from "./ShareButtons";
+import { EmailCapture } from "./EmailCapture";
 import { UrlInput } from "./UrlInput";
 import { ChallengeResult } from "./ChallengeResult";
 import { Skull } from "lucide-react";
@@ -74,6 +75,7 @@ export function RoastPoller({ initialRoast }: RoastPollerProps) {
         <ReportCard roast={roast} />
         {roast.challenge_from && <ChallengeResult currentRoast={roast} />}
         <ShareButtons roast={roast} />
+        {!roast.email && <EmailCapture roastId={roast.id} />}
       </section>
 
       <section className="mx-auto max-w-xl px-4 py-8 text-center sm:py-12">

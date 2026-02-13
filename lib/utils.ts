@@ -1,3 +1,5 @@
+export type RoastType = "website" | "linkedin" | "resume";
+
 export type RoastResult = {
   id: string;
   url: string;
@@ -13,6 +15,21 @@ export type RoastResult = {
   created_at: string;
   share_count: number;
   challenge_from: string | null;
+  roast_type: RoastType;
+  content_text: string | null;
+  content_file_url: string | null;
+  email: string | null;
+};
+
+export type BattleResult = {
+  id: string;
+  roast_a: string;
+  roast_b: string;
+  winner_id: string | null;
+  verdict: string;
+  status: "processing" | "completed" | "failed";
+  created_at: string;
+  share_count: number;
 };
 
 export function validateUrl(input: string): {

@@ -22,6 +22,10 @@ const exampleRoast: RoastResult = {
   created_at: new Date().toISOString(),
   share_count: 0,
   challenge_from: null,
+  roast_type: "website",
+  content_text: null,
+  content_file_url: null,
+  email: null,
 };
 
 export function ExampleRoast() {
