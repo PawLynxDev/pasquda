@@ -15,9 +15,18 @@ export function ShareButtons({ roast }: ShareButtonsProps) {
   const shareUrl = `${appUrl}/roast/${roast.id}`;
 
   function shareToX() {
-    const text = `Pasquda just roasted my website 💀\n\nScore: ${roast.score}/100\nGrade: ${roast.grade}\n\n"${roast.summary}"\n\nThink your site is better? Try yours → pasquda.com\n\n#PasqudaAudit`;
+    const text = `Pasquda just roasted my website 💀
+
+Score: ${roast.score}/100
+Grade: ${roast.grade}
+
+"${roast.summary}"
+
+Think your site is better? Try yours → pasquda.com
+
+#PasqudaAudit`;
     window.open(
-      `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`,
+      `https://x.com/intent/post?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`,
       "_blank"
     );
   }
@@ -52,9 +61,10 @@ export function ShareButtons({ roast }: ShareButtonsProps) {
   }
 
   function challengeFriend() {
-    const text = `Pasquda gave my website a ${roast.score}/100. Think yours can beat that?\nTake the challenge → ${shareUrl}`;
+    const text = `Pasquda gave my website a ${roast.score}/100. Think yours can beat that?
+Take the challenge → ${shareUrl}`;
     window.open(
-      `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,
+      `https://x.com/intent/post?text=${encodeURIComponent(text)}`,
       "_blank"
     );
   }
