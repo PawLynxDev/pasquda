@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { validateUrl, extractDomain } from "@/lib/utils";
 import { captureScreenshot } from "@/lib/screenshot";
 import { generateRoast } from "@/lib/ai";
@@ -9,6 +9,9 @@ import {
   uploadScreenshot,
   findRecentScreenshot,
 } from "@/lib/supabase";
+
+// Allow up to 60s for background processing (screenshot + AI)
+export const maxDuration = 60;
 
 // Simple in-memory rate limiting
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
@@ -104,8 +107,10 @@ export async function POST(request: NextRequest) {
       challenge_from: challenge_from || null,
     });
 
-    // Kick off background processing (fire-and-forget)
-    processRoast(id, url, domain).catch(console.error);
+    // Run background processing after response is sent (works on Vercel)
+    after(async () => {
+      await processRoast(id, url, domain);
+    });
 
     return NextResponse.json({ id });
   } catch (error) {

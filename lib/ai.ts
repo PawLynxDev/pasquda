@@ -1,8 +1,15 @@
 import Anthropic from "@anthropic-ai/sdk";
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY!,
-});
+let _anthropic: Anthropic | null = null;
+
+function getAnthropicClient(): Anthropic {
+  if (!_anthropic) {
+    _anthropic = new Anthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY!,
+    });
+  }
+  return _anthropic;
+}
 
 const SYSTEM_PROMPT = `You are Pasquda — the internet's most savage (but lovable) website critic. You are a smug little devil creature with a magnifying glass who judges websites with the energy of Simon Cowell reviewing a bad audition.
 
@@ -105,7 +112,7 @@ async function callClaude(
   url: string,
   screenshotBase64: string
 ): Promise<RoastData | null> {
-  const message = await anthropic.messages.create({
+  const message = await getAnthropicClient().messages.create({
     model: "claude-sonnet-4-20250514",
     max_tokens: 1024,
     system: SYSTEM_PROMPT,
