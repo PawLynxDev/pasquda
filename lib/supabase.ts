@@ -133,6 +133,19 @@ export async function uploadScreenshot(
   return urlData.publicUrl;
 }
 
+export async function getRecentRoasts(
+  limit = 10
+): Promise<{ domain: string; score: number; grade: string }[]> {
+  const { data } = await db()
+    .from("roasts")
+    .select("domain, score, grade")
+    .eq("status", "completed")
+    .order("created_at", { ascending: false })
+    .limit(limit);
+
+  return data ?? [];
+}
+
 export async function findRecentScreenshot(
   domain: string
 ): Promise<string | null> {

@@ -3,17 +3,22 @@ import { Header } from "@/components/Header";
 import { UrlInput } from "@/components/UrlInput";
 import { HowItWorks } from "@/components/HowItWorks";
 import { ExampleRoast } from "@/components/ExampleRoast";
+import { RecentRoasts } from "@/components/RecentRoasts";
 import { Footer } from "@/components/Footer";
-import { getTotalRoasts } from "@/lib/supabase";
+import { getTotalRoasts, getRecentRoasts } from "@/lib/supabase";
 
 export const revalidate = 60;
 
 export default async function HomePage() {
   let totalRoasts = 0;
+  let recentRoasts: { domain: string; score: number; grade: string }[] = [];
   try {
-    totalRoasts = await getTotalRoasts();
+    [totalRoasts, recentRoasts] = await Promise.all([
+      getTotalRoasts(),
+      getRecentRoasts(10),
+    ]);
   } catch {
-    // Supabase not yet configured — show 0
+    // Supabase not yet configured — show defaults
   }
 
   return (
@@ -66,6 +71,14 @@ export default async function HomePage() {
       <div className="mx-auto h-px max-w-md bg-gradient-to-r from-transparent via-pasquda-pink/20 to-transparent" />
 
       <ExampleRoast />
+
+      {recentRoasts.length > 0 && (
+        <>
+          <div className="mx-auto h-px max-w-md bg-gradient-to-r from-transparent via-pasquda-pink/20 to-transparent" />
+          <RecentRoasts roasts={recentRoasts} />
+        </>
+      )}
+
       <Footer />
     </main>
   );
