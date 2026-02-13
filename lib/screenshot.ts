@@ -21,6 +21,7 @@ export async function captureScreenshot(url: string): Promise<Buffer> {
     .blockAds(true)
     .blockCookieBanners(true)
     .blockChats(true)
+    .ignoreHostErrors(true)
     .delay(3)
     .timeout(15);
 
