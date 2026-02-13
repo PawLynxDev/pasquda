@@ -1,9 +1,9 @@
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { getRoast } from "@/lib/supabase";
 import { OGReportCard } from "@/lib/generate-image";
-
-export const runtime = "edge";
 
 export async function GET(
   _request: NextRequest,
@@ -15,16 +15,9 @@ export async function GET(
     return new Response("Not found", { status: 404 });
   }
 
-  const interBold = await fetch(
-    new URL("../../../../public/fonts/Inter-Bold.ttf", import.meta.url)
-  ).then((res) => res.arrayBuffer());
-
-  const jetbrainsBold = await fetch(
-    new URL(
-      "../../../../public/fonts/JetBrainsMono-Bold.ttf",
-      import.meta.url
-    )
-  ).then((res) => res.arrayBuffer());
+  const fontsDir = join(process.cwd(), "public", "fonts");
+  const interBold = (await readFile(join(fontsDir, "Inter-Bold.ttf"))).buffer;
+  const jetbrainsBold = (await readFile(join(fontsDir, "JetBrainsMono-Bold.ttf"))).buffer;
 
   return new ImageResponse(<OGReportCard roast={roast} />, {
     width: 1200,

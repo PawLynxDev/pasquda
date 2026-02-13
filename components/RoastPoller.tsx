@@ -5,6 +5,7 @@ import { LoadingScreen } from "./LoadingScreen";
 import { ReportCard } from "./ReportCard";
 import { ShareButtons } from "./ShareButtons";
 import { UrlInput } from "./UrlInput";
+import { ChallengeResult } from "./ChallengeResult";
 import type { RoastResult } from "@/lib/utils";
 
 interface RoastPollerProps {
@@ -70,6 +71,7 @@ export function RoastPoller({ initialRoast }: RoastPollerProps) {
     <>
       <section className="mx-auto max-w-4xl px-3 py-8 sm:px-4 sm:py-12">
         <ReportCard roast={roast} />
+        {roast.challenge_from && <ChallengeResult currentRoast={roast} />}
         <ShareButtons roast={roast} />
       </section>
 
