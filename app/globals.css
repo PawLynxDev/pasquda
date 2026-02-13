@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+@theme {
+  /* Pasquda Brand Colors */
+  --color-pasquda-black: #030305;
+  --color-pasquda-dark: #111111;
+  --color-pasquda-darker: #1A1A1A;
+  --color-pasquda-pink: #FF1493;
+  --color-pasquda-pink-light: #FF69B4;
+  --color-pasquda-white: #FFFFFF;
+  --color-pasquda-gray: #A0A0A0;
+  --color-pasquda-green: #00FF88;
+
+  /* Grade Colors */
+  --color-grade-s: #FFD700;
+  --color-grade-a: #00FF88;
+  --color-grade-b: #4ECDC4;
+  --color-grade-c: #FFE66D;
+  --color-grade-d: #FF6B6B;
+  --color-grade-f: #FF1493;
+
+  /* Font Families */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  /* Custom animations */
+  --animate-progress: progress 15s ease-out forwards;
+  --animate-fade-in: fadeIn 0.4s ease-out forwards;
+  --animate-fade-in-up: fadeInUp 0.6s ease-out forwards;
+  --animate-pulse-pink: pulsePink 2s ease-in-out infinite;
+  --animate-glow: glow 3s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-slide-up: slideUp 0.5s ease-out forwards;
+}
+
+@keyframes progress {
+  from { width: 0%; }
+  to { width: 95%; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulsePink {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 20, 147, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(255, 20, 147, 0); }
+}
+
+@keyframes glow {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(255, 20, 147, 0.3)); }
+  50% { filter: drop-shadow(0 0 20px rgba(255, 20, 147, 0.6)); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Base Styles */
+body {
+  background-color: #030305;
+  color: #FFFFFF;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Grade stamp rotation */
+.grade-stamp {
+  transform: rotate(-3deg);
+  display: inline-block;
+}
+
+/* Glow text effect */
+.text-glow-pink {
+  text-shadow: 0 0 20px rgba(255, 20, 147, 0.5), 0 0 40px rgba(255, 20, 147, 0.2);
+}
+
+/* Card glow on hover */
+.card-glow {
+  transition: all 0.3s ease;
+}
+.card-glow:hover {
+  box-shadow: 0 0 30px rgba(255, 20, 147, 0.1), 0 0 60px rgba(255, 20, 147, 0.05);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #FF1493, #FF69B4, #FF1493);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Shimmer button background */
+.shimmer-bg {
+  background: linear-gradient(110deg, #FF1493 0%, #FF69B4 40%, #FF1493 60%, #FF69B4 100%);
+  background-size: 200% 100%;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111111;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555555;
+}
