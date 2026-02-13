@@ -1,18 +1,21 @@
-const steps = [
+import { Link2, ScanSearch, FileText } from "lucide-react";
+import type { ReactNode } from "react";
+
+const steps: { icon: ReactNode; number: string; title: string; description: string }[] = [
   {
-    icon: "🔗",
+    icon: <Link2 className="h-10 w-10 text-pasquda-pink sm:h-12 sm:w-12" />,
     number: "01",
     title: "Paste a URL",
     description: "Drop any website link into the input field.",
   },
   {
-    icon: "🔍",
+    icon: <ScanSearch className="h-10 w-10 text-pasquda-pink sm:h-12 sm:w-12" />,
     number: "02",
     title: "AI Analyzes It",
     description: "Pasquda screenshots your site and judges every pixel.",
   },
   {
-    icon: "🔥",
+    icon: <FileText className="h-10 w-10 text-pasquda-pink sm:h-12 sm:w-12" />,
     number: "03",
     title: "Get Your Report Card",
     description: "A savage, shareable roast you won't forget.",
@@ -40,7 +43,7 @@ export function HowItWorks() {
             </span>
 
             {/* Icon */}
-            <div className="mb-3 text-4xl transition-transform duration-300 group-hover:scale-110 sm:mb-4 sm:text-5xl">
+            <div className="mb-3 flex justify-center transition-transform duration-300 group-hover:scale-110 sm:mb-4">
               {step.icon}
             </div>
 

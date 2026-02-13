@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Flame } from "lucide-react";
 
 interface UrlInputProps {
   challengeFrom?: string;
@@ -86,7 +87,7 @@ export function UrlInput({ challengeFrom, compact = false }: UrlInputProps) {
                 Sending...
               </span>
             ) : (
-              "🔥 ROAST IT"
+              <span className="flex items-center gap-2"><Flame className="h-5 w-5" /> ROAST IT</span>
             )}
           </button>
         </div>

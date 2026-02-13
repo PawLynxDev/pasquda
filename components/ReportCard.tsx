@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Skull, Flame, Trophy } from "lucide-react";
 import { getGradeColor } from "@/lib/utils";
 import type { RoastResult } from "@/lib/utils";
 
@@ -78,9 +79,9 @@ export function ReportCard({ roast }: ReportCardProps) {
 
         {/* Summary */}
         <div className="mt-6 rounded-xl border border-white/[0.06] bg-white/[0.03] p-4 sm:mt-8 sm:p-5">
-          <p className="text-base leading-relaxed text-white/90 sm:text-lg">
-            <span className="mr-2">💀</span>
-            &ldquo;{roast.summary}&rdquo;
+          <p className="flex items-start gap-2 text-base leading-relaxed text-white/90 sm:text-lg">
+            <Skull className="mt-0.5 h-5 w-5 flex-shrink-0 text-pasquda-pink" />
+            <span>&ldquo;{roast.summary}&rdquo;</span>
           </p>
         </div>
 
@@ -91,7 +92,7 @@ export function ReportCard({ roast }: ReportCardProps) {
               key={i}
               className="flex items-start gap-3 rounded-lg px-2 py-1.5 transition-colors hover:bg-white/[0.02]"
             >
-              <span className="mt-0.5 flex-shrink-0">🔥</span>
+              <Flame className="mt-0.5 h-4 w-4 flex-shrink-0 text-pasquda-pink/70" />
               <p className="text-white/75 leading-relaxed">{bullet}</p>
             </div>
           ))}
@@ -99,7 +100,7 @@ export function ReportCard({ roast }: ReportCardProps) {
 
         {/* Backhanded compliment */}
         <div className="mt-5 flex items-start gap-3 rounded-xl border border-pasquda-green/15 bg-pasquda-green/[0.04] p-4 sm:p-5">
-          <span className="mt-0.5 flex-shrink-0">🏆</span>
+          <Trophy className="mt-0.5 h-4 w-4 flex-shrink-0 text-pasquda-green" />
           <p className="text-sm text-pasquda-green/90 leading-relaxed sm:text-base">
             &ldquo;{roast.backhanded_compliment}&rdquo;
           </p>

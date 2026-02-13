@@ -17,7 +17,7 @@ const loadingMessages = [
   "Your website is loading faster than our roast. That's the only win you'll get.",
   "Consulting with our team of design critics (it's just one angry AI)...",
   "Writing a roast so good you'll want to frame it. Or cry. Probably both.",
-  "Almost done. The roast is... well-done. 🔥",
+  "Almost done. The roast is... well-done.",
 ];
 
 export function LoadingScreen() {

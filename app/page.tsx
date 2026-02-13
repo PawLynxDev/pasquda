@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Flame } from "lucide-react";
 import { Header } from "@/components/Header";
 import { UrlInput } from "@/components/UrlInput";
 import { HowItWorks } from "@/components/HowItWorks";
@@ -56,8 +57,8 @@ export default async function HomePage() {
         </div>
 
         {totalRoasts > 0 && (
-          <p className="relative mt-5 text-sm text-pasquda-gray/50 animate-fade-in">
-            🔥 {totalRoasts.toLocaleString()} websites roasted so far
+          <p className="relative mt-5 flex items-center gap-1.5 text-sm text-pasquda-gray/50 animate-fade-in">
+            <Flame className="h-4 w-4 text-pasquda-pink" /> {totalRoasts.toLocaleString()} websites roasted so far
           </p>
         )}
       </section>

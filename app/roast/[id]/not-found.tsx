@@ -1,3 +1,4 @@
+import { SearchX } from "lucide-react";
 import { Header } from "@/components/Header";
 import { UrlInput } from "@/components/UrlInput";
 import { Footer } from "@/components/Footer";
@@ -7,7 +8,7 @@ export default function RoastNotFound() {
     <main className="min-h-screen bg-pasquda-black">
       <Header />
       <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
-        <p className="text-7xl">🔍</p>
+        <SearchX className="h-16 w-16 text-pasquda-gray/40" />
         <h1 className="mt-4 font-heading text-3xl font-bold">
           Roast Not Found
         </h1>

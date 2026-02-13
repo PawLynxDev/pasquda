@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Flame } from "lucide-react";
 
 export function Footer() {
   return (
@@ -13,7 +14,8 @@ export function Footer() {
             className="h-6 w-6 sm:h-7 sm:w-7"
           />
           <span className="text-xs text-pasquda-gray/40 sm:text-sm">
-            Built with 🔥 by Pasquda
+            Built with <Flame className="inline h-3.5 w-3.5 text-pasquda-pink" /> by{" "}
+            <a href="https://pawlynx.com/" target="_blank" rel="noopener noreferrer" className="text-pasquda-gray/60 underline decoration-pasquda-gray/20 transition-colors hover:text-pasquda-pink">PawLynx</a>
           </span>
         </div>
 

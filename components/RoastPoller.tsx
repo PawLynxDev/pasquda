@@ -6,6 +6,7 @@ import { ReportCard } from "./ReportCard";
 import { ShareButtons } from "./ShareButtons";
 import { UrlInput } from "./UrlInput";
 import { ChallengeResult } from "./ChallengeResult";
+import { Skull } from "lucide-react";
 import type { RoastResult } from "@/lib/utils";
 
 interface RoastPollerProps {
@@ -52,7 +53,7 @@ export function RoastPoller({ initialRoast }: RoastPollerProps) {
   if (roast.status === "failed" || error) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
-        <p className="text-6xl">💀</p>
+        <Skull className="h-16 w-16 text-grade-d" />
         <p className="mt-4 text-xl font-bold text-grade-d">
           {error || "Something went wrong"}
         </p>

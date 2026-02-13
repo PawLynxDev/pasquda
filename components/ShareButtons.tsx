@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Download, Link, Check, Swords } from "lucide-react";
 import type { RoastResult } from "@/lib/utils";
 
 interface ShareButtonsProps {
@@ -75,7 +76,7 @@ export function ShareButtons({ roast }: ShareButtonsProps) {
             Saving...
           </span>
         ) : (
-          "📥 Download"
+          <><Download className="h-4 w-4" /> Download</>
         )}
       </button>
 
@@ -100,7 +101,7 @@ export function ShareButtons({ roast }: ShareButtonsProps) {
         onClick={copyLink}
         className={`${btnBase} border border-white/[0.08] bg-white/[0.03] text-white hover:border-white/15 hover:bg-white/[0.06]`}
       >
-        {copied ? "✅ Copied!" : "🔗 Copy Link"}
+        {copied ? <><Check className="h-4 w-4" /> Copied!</> : <><Link className="h-4 w-4" /> Copy Link</>}
       </button>
 
       {/* Challenge */}
@@ -108,7 +109,7 @@ export function ShareButtons({ roast }: ShareButtonsProps) {
         onClick={challengeFriend}
         className={`${btnBase} col-span-2 border border-pasquda-pink/30 text-pasquda-pink hover:bg-pasquda-pink/10 hover:border-pasquda-pink/50 hover:shadow-[0_0_20px_rgba(255,20,147,0.1)] sm:col-span-2`}
       >
-        ⚔️ Challenge a Friend
+        <Swords className="h-4 w-4" /> Challenge a Friend
       </button>
     </div>
   );
